@@ -1,9 +1,11 @@
+import 'dart:ffi';
+
 import 'package:flutter/widgets.dart';
 
 class Countup extends StatefulWidget {
   final double begin;
   final double end;
-  final int precision;
+  final double precision;
   final Curve curve;
   final Duration duration;
   final TextStyle? style;
@@ -103,7 +105,7 @@ class _CountupAnimatedText extends AnimatedWidget {
   final RegExp reg = new RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
 
   final Animation<double> animation;
-  final int precision;
+  final double precision;
   final TextStyle? style;
   final TextAlign? textAlign;
   final TextDirection? textDirection;
@@ -138,14 +140,10 @@ class _CountupAnimatedText extends AnimatedWidget {
   @override
   Widget build(BuildContext context) => Text(
         separator != null
-            ? '$prefix' +
-                this
-                    .animation
-                    .value
-                    .toStringAsFixed(precision)
+            ? '$prefix' + precision.toString()
                     .replaceAllMapped(
                         reg, (Match match) => '${match[1]}$separator') + '$suffix'
-            : '$prefix' + this.animation.value.toStringAsFixed(precision) + '$suffix',
+            : '$prefix' + precision.toString() + '$suffix',
         style: this.style,
         textAlign: this.textAlign,
         textDirection: this.textDirection,
